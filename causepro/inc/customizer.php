@@ -386,6 +386,27 @@ function causepro_customize_register( $wp_customize ) {
 		) );
 	}
 
+	// Section: Social Media Links
+	$wp_customize->add_section( 'causepro_social_media_section', array(
+		'title' => __( 'Social Media Links', 'causepro' ),
+		'panel' => 'causepro_theme_options_panel',
+		'description' => __( 'Enter the full URLs for your social media profiles.', 'causepro' ),
+	) );
+	$social_follow_networks = ['Facebook', 'Twitter', 'LinkedIn', 'Instagram'];
+	foreach( $social_follow_networks as $network ) {
+		$wp_customize->add_setting( "causepro_social_follow_url_{$network}", array(
+			'default'           => '',
+			'sanitize_callback' => 'esc_url_raw',
+		) );
+		$wp_customize->add_control( "causepro_social_follow_url_{$network}_control", array(
+			'label'    => sprintf( __( '%s URL', 'causepro' ), $network ),
+			'section'  => 'causepro_social_media_section',
+			'settings' => "causepro_social_follow_url_{$network}",
+			'type'     => 'url',
+		) );
+	}
+
+
 	// Section: Typography
 	$wp_customize->add_section( 'causepro_typography_section', array(
 		'title' => __( 'Typography', 'causepro' ),
@@ -463,54 +484,61 @@ function causepro_customize_register( $wp_customize ) {
 			'section' => "causepro_{$section}_design_section",
 			'settings' => "causepro_{$section}_bg_type",
 			'type'    => 'radio',
-			'choices' => array(
-				'none'     => __( 'None', 'causepro' ),
-				'color'    => __( 'Color', 'causepro' ),
-				'gradient' => __( 'Gradient', 'causepro' ),
-				'image'    => __( 'Image', 'causepro' ),
-			),
+			'choices' => array( 'none' => 'None', 'color' => 'Color', 'gradient' => 'Gradient', 'image' => 'Image' ),
 		) );
 
-		// Background Controls (with active_callback)
+		// Background Controls (with CORRECT active_callback)
 		$wp_customize->add_setting( "causepro_{$section}_bg_color", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_bg_color_control", array(
-			'label' => __( 'Background Color', 'causepro' ), 'section' => "causepro_{$section}_design_section",
-			'active_callback' => function() use ($section) { return get_theme_mod("causepro_{$section}_bg_type") === 'color'; }
+			'label' => 'Background Color', 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_bg_color",
+			'active_callback' => function( $control ) {
+				$section_slug = str_replace( array('causepro_', '_bg_color_control'), '', $control->id );
+				return get_theme_mod("causepro_{$section_slug}_bg_type") === 'color';
+			}
 		) ) );
 
 		$wp_customize->add_setting( "causepro_{$section}_bg_gradient_1", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_bg_gradient_1_control", array(
-			'label' => __( 'Gradient Color 1', 'causepro' ), 'section' => "causepro_{$section}_design_section",
-			'active_callback' => function() use ($section) { return get_theme_mod("causepro_{$section}_bg_type") === 'gradient'; }
+			'label' => 'Gradient Color 1', 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_bg_gradient_1",
+			'active_callback' => function( $control ) {
+				$section_slug = str_replace( array('causepro_', '_bg_gradient_1_control'), '', $control->id );
+				return get_theme_mod("causepro_{$section_slug}_bg_type") === 'gradient';
+			}
 		) ) );
 		$wp_customize->add_setting( "causepro_{$section}_bg_gradient_2", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_bg_gradient_2_control", array(
-			'label' => __( 'Gradient Color 2', 'causepro' ), 'section' => "causepro_{$section}_design_section",
-			'active_callback' => function() use ($section) { return get_theme_mod("causepro_{$section}_bg_type") === 'gradient'; }
+			'label' => 'Gradient Color 2', 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_bg_gradient_2",
+			'active_callback' => function( $control ) {
+				$section_slug = str_replace( array('causepro_', '_bg_gradient_2_control'), '', $control->id );
+				return get_theme_mod("causepro_{$section_slug}_bg_type") === 'gradient';
+			}
 		) ) );
 
 		$wp_customize->add_setting( "causepro_{$section}_bg_image", array( 'sanitize_callback' => 'esc_url_raw' ) );
 		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, "causepro_{$section}_bg_image_control", array(
-			'label' => __( 'Background Image', 'causepro' ), 'section' => "causepro_{$section}_design_section",
-			'active_callback' => function() use ($section) { return get_theme_mod("causepro_{$section}_bg_type") === 'image'; }
+			'label' => 'Background Image', 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_bg_image",
+			'active_callback' => function( $control ) {
+				$section_slug = str_replace( array('causepro_', '_bg_image_control'), '', $control->id );
+				return get_theme_mod("causepro_{$section_slug}_bg_type") === 'image';
+			}
 		) ) );
 
 		// Text & Link Colors
 		$wp_customize->add_setting( "causepro_{$section}_text_color", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_text_color_control", array(
-			'label' => __( 'Text Color', 'causepro' ), 'section' => "causepro_{$section}_design_section",
+			'label' => __( 'Text Color', 'causepro' ), 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_text_color",
 		) ) );
 		$wp_customize->add_setting( "causepro_{$section}_heading_color", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_heading_color_control", array(
-			'label' => __( 'Heading Color', 'causepro' ), 'section' => "causepro_{$section}_design_section",
+			'label' => __( 'Heading Color', 'causepro' ), 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_heading_color",
 		) ) );
 		$wp_customize->add_setting( "causepro_{$section}_link_color", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_link_color_control", array(
-			'label' => __( 'Link Color', 'causepro' ), 'section' => "causepro_{$section}_design_section",
+			'label' => __( 'Link Color', 'causepro' ), 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_link_color",
 		) ) );
 		$wp_customize->add_setting( "causepro_{$section}_link_hover_color", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_link_hover_color_control", array(
-			'label' => __( 'Link Hover Color', 'causepro' ), 'section' => "causepro_{$section}_design_section",
+			'label' => __( 'Link Hover Color', 'causepro' ), 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_link_hover_color",
 		) ) );
 	}
 }

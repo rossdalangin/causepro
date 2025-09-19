@@ -26,6 +26,8 @@
 			</div>
 		<?php endif; ?>
 
+		<?php causepro_social_follow_links(); ?>
+
 		<div class="site-info-wrapper">
 			<div class="site-info container">
 				<?php

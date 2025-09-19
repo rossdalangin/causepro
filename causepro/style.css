@@ -56,7 +56,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 600;
 	line-height: 1.2;
 	margin-top: 0;
-	margin-bottom: 0.5em;
+	margin-bottom: 0.75em;
 }
 
 p {
@@ -125,6 +125,7 @@ img {
 	justify-content: space-between;
 	align-items: center;
 	border-bottom: 1px solid #eee;
+	margin-bottom: 2em;
 }
 
 .site-branding {
@@ -229,7 +230,7 @@ img {
 /* 5.0 - Homepage Sections
 --------------------------------------------- */
 section[class^="homepage-"] {
-	padding: 4em 0;
+	padding: 5em 0;
 }
 section[class^="homepage-"]:nth-child(even) {
 	background-color: #f9f9f9;
@@ -480,6 +481,11 @@ section[class^="homepage-"]:nth-child(even) {
 	border-bottom: 1px solid #eee;
 	padding-bottom: 1em;
 }
+
+.single .entry-content {
+	margin-top: 2em;
+}
+
 .causes-archive-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -510,6 +516,37 @@ section[class^="homepage-"]:nth-child(even) {
 
 /* 7.0 - Components
 --------------------------------------------- */
+/* Social Follow Links (Footer) */
+.social-follow-links {
+	text-align: center;
+	padding: 2em 0;
+	border-top: 1px solid #444;
+}
+.social-follow-links ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: inline-flex;
+	gap: 1em;
+}
+.social-follow-links a {
+	display: inline-block;
+	width: 44px;
+	height: 44px;
+	background-color: #333;
+	color: #fff;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 44px;
+	font-size: 20px;
+}
+.social-follow-links a:hover {
+	opacity: 0.8;
+}
+.social-follow-links .dashicons {
+	line-height: inherit;
+}
+
 /* Social Sharing */
 .social-sharing {
 	margin-top: 2em;
@@ -597,9 +634,9 @@ a:focus, button:focus, input:focus {
 	margin: 2em auto;
 }
 
-.blog-archive-grid .blog-item {
-	width: calc(33.333% - 1.4em);
-	margin: 0.7em;
+.blog-archive-grid .blog-item,
+.causes-archive-grid .cause-item {
+	margin-bottom: 2em;
 }
 
 .blog-archive-list .blog-item {
@@ -644,5 +681,8 @@ a:focus, button:focus, input:focus {
 
 	.hero-headline {
 		font-size: 2.5em;
+	}
+	section[class^="homepage-"] {
+		padding: 3em 0;
 	}
 }
