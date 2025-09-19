@@ -9,7 +9,14 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'blog-item' ); ?>>
+	<?php if ( has_post_thumbnail() ) : ?>
+		<div class="post-thumbnail">
+			<a href="<?php the_permalink(); ?>">
+				<?php the_post_thumbnail( 'medium_large' ); ?>
+			</a>
+		</div>
+	<?php endif; ?>
 	<header class="entry-header">
 		<?php
 		if ( is_singular() ) :

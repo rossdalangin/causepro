@@ -79,6 +79,16 @@ img {
 
 /* 2.0 - Layout
 --------------------------------------------- */
+.site {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.site-content {
+	flex-grow: 1;
+}
+
 .container {
 	max-width: 1100px;
 	margin-left: auto;
