@@ -6,11 +6,15 @@
  */
 
 $headline = get_theme_mod( 'causepro_causes_headline', __( 'Our Current Causes', 'causepro' ) );
+$subtitle = get_theme_mod( 'causepro_causes_subtitle' );
 ?>
 
 <section class="homepage-causes">
 	<div class="container">
 		<h2 class="section-title causes-headline"><?php echo esc_html( $headline ); ?></h2>
+		<?php if ( ! empty( $subtitle ) ) : ?>
+			<p class="section-subtitle"><?php echo esc_html( $subtitle ); ?></p>
+		<?php endif; ?>
 		<div class="causes-grid">
 			<?php
 			$args = array(

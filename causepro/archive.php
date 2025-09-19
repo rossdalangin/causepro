@@ -1,6 +1,6 @@
 <?php
 /**
- * The main template file
+ * The template for displaying archive pages
  *
  * @package CausePro
  */
@@ -16,21 +16,22 @@ $grid_class = ( $layout === 'masonry' ) ? 'blog-archive-grid masonry-grid' : 'bl
 	<div class="site-content-wrapper">
 		<main id="main" class="site-main">
 
+		<?php if ( have_posts() ) : ?>
+
+			<header class="page-header">
+				<?php
+				the_archive_title( '<h1 class="page-title">', '</h1>' );
+				the_archive_description( '<div class="archive-description">', '</div>' );
+				?>
+			</header><!-- .page-header -->
+
 			<div class="<?php echo esc_attr( $grid_class ); ?>">
 				<?php
-				if ( have_posts() ) :
-
-					/* Start the Loop */
-					while ( have_posts() ) :
-						the_post();
-						get_template_part( 'template-parts/content', get_post_format() );
-					endwhile;
-
-				else :
-
-					get_template_part( 'template-parts/content', 'none' );
-
-				endif;
+				/* Start the Loop */
+				while ( have_posts() ) :
+					the_post();
+					get_template_part( 'template-parts/content', get_post_format() );
+				endwhile;
 				?>
 			</div>
 
@@ -47,12 +48,15 @@ $grid_class = ( $layout === 'masonry' ) ? 'blog-archive-grid masonry-grid' : 'bl
 			endif;
 			?>
 
+		<?php else : ?>
+			<?php get_template_part( 'template-parts/content', 'none' ); ?>
+		<?php endif; ?>
+
 		</main><!-- #main -->
 
 		<?php get_sidebar(); ?>
 	</div><!-- .site-content-wrapper -->
 </div><!-- .container -->
-
 
 <?php
 get_footer();

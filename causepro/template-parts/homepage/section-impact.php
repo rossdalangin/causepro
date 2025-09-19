@@ -6,11 +6,15 @@
  */
 
 $headline = get_theme_mod( 'causepro_impact_headline', __( 'Our Impact', 'causepro' ) );
+$subtitle = get_theme_mod( 'causepro_impact_subtitle' );
 ?>
 
 <section class="homepage-impact">
 	<div class="container">
 		<h2 class="section-title impact-headline"><?php echo esc_html( $headline ); ?></h2>
+		<?php if ( ! empty( $subtitle ) ) : ?>
+			<p class="section-subtitle"><?php echo esc_html( $subtitle ); ?></p>
+		<?php endif; ?>
 		<div class="impact-stats-grid">
 			<?php
 			for ( $i = 1; $i <= 4; $i++ ) :

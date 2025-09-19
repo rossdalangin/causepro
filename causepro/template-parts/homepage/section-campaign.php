@@ -6,6 +6,7 @@
  */
 
 $headline   = get_theme_mod( 'causepro_campaign_headline', __( 'Major Campaign', 'causepro' ) );
+$subtitle   = get_theme_mod( 'causepro_campaign_subtitle' );
 $text       = get_theme_mod( 'causepro_campaign_text' );
 $goal       = get_theme_mod( 'causepro_campaign_goal', 10000 );
 $raised     = get_theme_mod( 'causepro_campaign_raised', 7500 );
@@ -25,6 +26,9 @@ if ( $goal > 0 ) {
 <section class="homepage-campaign">
 	<div class="container">
 		<h2 class="section-title campaign-headline"><?php echo esc_html( $headline ); ?></h2>
+		<?php if ( ! empty( $subtitle ) ) : ?>
+			<p class="section-subtitle"><?php echo esc_html( $subtitle ); ?></p>
+		<?php endif; ?>
 		<div class="campaign-content">
 			<div class="campaign-text">
 				<?php echo wp_kses_post( $text ); ?>

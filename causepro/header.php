@@ -25,25 +25,30 @@
 		<div class="site-branding">
 			<?php
 			the_custom_logo();
-			if ( is_front_page() && is_home() ) :
-				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php
-			else :
-				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-			endif;
-			$causepro_description = get_bloginfo( 'description', 'display' );
-			if ( $causepro_description || is_customize_preview() ) :
-				?>
-				<p class="site-description"><?php echo $causepro_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+			if ( ! has_custom_logo() ) :
+				if ( is_front_page() && is_home() ) :
+					?>
+					<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+					<?php
+				else :
+					?>
+					<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+					<?php
+				endif;
+				$causepro_description = get_bloginfo( 'description', 'display' );
+				if ( $causepro_description || is_customize_preview() ) :
+					?>
+					<p class="site-description"><?php echo $causepro_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+				<?php endif; ?>
 			<?php endif; ?>
 		</div><!-- .site-branding -->
 
 		<div class="header-navigation-area">
 			<nav id="site-navigation" class="main-navigation">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'causepro' ); ?></button>
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+					<span class="dashicons dashicons-menu"></span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Primary Menu', 'causepro' ); ?></span>
+				</button>
 				<?php
 				wp_nav_menu(
 					array(

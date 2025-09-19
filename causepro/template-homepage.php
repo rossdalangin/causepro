@@ -16,11 +16,13 @@ get_header();
 
 	// Default sections array
 	$sections = [
-		'hero'     => 'template-parts/homepage/section-hero.php',
-		'impact'   => 'template-parts/homepage/section-impact.php',
-		'causes'   => 'template-parts/homepage/section-causes.php',
-		'campaign' => 'template-parts/homepage/section-campaign.php',
-		'events'   => 'template-parts/homepage/section-events.php',
+		'hero'         => 'template-parts/homepage/section-hero.php',
+		'impact'       => 'template-parts/homepage/section-impact.php',
+		'causes'       => 'template-parts/homepage/section-causes.php',
+		'campaign'     => 'template-parts/homepage/section-campaign.php',
+		'events'       => 'template-parts/homepage/section-events.php',
+		'testimonials' => 'template-parts/homepage/section-testimonials.php',
+		'blog'         => 'template-parts/homepage/section-blog.php',
 	];
 
 	// Get priorities from Customizer

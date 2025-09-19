@@ -6,11 +6,15 @@
  */
 
 $headline = get_theme_mod( 'causepro_events_headline', __( 'Upcoming Events', 'causepro' ) );
+$subtitle = get_theme_mod( 'causepro_events_subtitle' );
 ?>
 
 <section class="homepage-events">
 	<div class="container">
 		<h2 class="section-title events-headline"><?php echo esc_html( $headline ); ?></h2>
+		<?php if ( ! empty( $subtitle ) ) : ?>
+			<p class="section-subtitle"><?php echo esc_html( $subtitle ); ?></p>
+		<?php endif; ?>
 		<div class="events-list">
 			<?php
 			$today = date( 'Y-m-d H:i:s' );
