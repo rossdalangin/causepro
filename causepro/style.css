@@ -323,6 +323,7 @@ section[class^="homepage-"]:nth-child(even) {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 2em;
+	align-items: start; /* This is the fix */
 }
 .cause-item {
 	background-color: #fff;
@@ -337,7 +338,7 @@ section[class^="homepage-"]:nth-child(even) {
 	padding: 1.5em;
 }
 .cause-item .entry-summary {
-	flex-grow: 1;
+	/* flex-grow: 1; Removed to allow natural height */
 }
 .cause-item .learn-more-button {
 	display: block;
@@ -685,4 +686,12 @@ a:focus, button:focus, input:focus {
 	section[class^="homepage-"] {
 		padding: 3em 0;
 	}
+}
+
+/* Template-specific overrides */
+.page-template-template-homepage .site-content-wrapper {
+	display: block;
+}
+.page-template-template-homepage .site-main {
+	width: 100%;
 }
