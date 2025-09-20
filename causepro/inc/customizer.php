@@ -583,6 +583,10 @@ function causepro_customize_register( $wp_customize ) {
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_heading_color_control", array(
 			'label' => __( 'Heading Color', 'causepro' ), 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_heading_color",
 		) ) );
+		$wp_customize->add_setting( "causepro_{$section}_subtitle_color", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_subtitle_color_control", array(
+			'label' => __( 'Subtitle Color', 'causepro' ), 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_subtitle_color",
+		) ) );
 		$wp_customize->add_setting( "causepro_{$section}_link_color", array( 'sanitize_callback' => 'sanitize_hex_color' ) );
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, "causepro_{$section}_link_color_control", array(
 			'label' => __( 'Link Color', 'causepro' ), 'section' => "causepro_{$section}_design_section", 'settings' => "causepro_{$section}_link_color",

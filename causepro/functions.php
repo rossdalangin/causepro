@@ -305,6 +305,9 @@ function causepro_dynamic_css() {
 		if ( ! empty( $link_color ) ) { $custom_css .= "{$section_selector} a { color: {$link_color}; }"; }
 		$link_hover_color = get_theme_mod( "causepro_{$section}_link_hover_color" );
 		if ( ! empty( $link_hover_color ) ) { $custom_css .= "{$section_selector} a:hover { color: {$link_hover_color}; }"; }
+
+		$subtitle_color = get_theme_mod( "causepro_{$section}_subtitle_color" );
+		if ( ! empty( $subtitle_color ) ) { $custom_css .= "{$section_selector} .section-subtitle { color: {$subtitle_color}; }"; }
 	}
 
 
@@ -342,3 +345,95 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Custom Post Types.
  */
 require get_template_directory() . '/inc/post-types.php';
+
+
+/**
+ * Register a custom REST API endpoint for events.
+ */
+function causepro_register_events_endpoint() {
+	register_rest_route( 'causepro/v1', '/events', array(
+		'methods'  => 'GET',
+		'callback' => 'causepro_get_events_for_calendar',
+		'permission_callback' => '__return_true', // Publicly accessible
+	) );
+}
+add_action( 'rest_api_init', 'causepro_register_events_endpoint' );
+
+/**
+ * Callback function to get events for the FullCalendar.
+ *
+ * @param WP_REST_Request $request The request object.
+ * @return WP_REST_Response The response object.
+ */
+function causepro_get_events_for_calendar( WP_REST_Request $request ) {
+	$start_date = $request->get_param( 'start' );
+	$end_date   = $request->get_param( 'end' );
+
+	$args = array(
+		'post_type'      => 'event',
+		'posts_per_page' => -1,
+		'meta_query'     => array(
+			array(
+				'key'     => '_event_datetime',
+				'value'   => array( $start_date, $end_date ),
+				'compare' => 'BETWEEN',
+				'type'    => 'DATETIME',
+			),
+		),
+	);
+
+	$events_query = new WP_Query( $args );
+	$events = array();
+
+	if ( $events_query->have_posts() ) {
+		while ( $events_query->have_posts() ) {
+			$events_query->the_post();
+			$event_datetime = get_post_meta( get_the_ID(), '_event_datetime', true );
+			if ( $event_datetime ) {
+				$events[] = array(
+					'title' => get_the_title(),
+					'start' => $event_datetime,
+					'url'   => get_permalink(),
+				);
+			}
+		}
+		wp_reset_postdata();
+	}
+
+	return new WP_REST_Response( $events, 200 );
+}
+
+
+/**
+ * Enqueue scripts and styles for the events calendar page template.
+ */
+function causepro_calendar_scripts() {
+	// Only load these scripts on the Events Calendar page template.
+	if ( is_page_template( 'template-calendar.php' ) ) {
+		// Enqueue FullCalendar's main JS file from a CDN.
+		wp_enqueue_script( 'fullcalendar', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js', array(), '6.1.19', true );
+
+		// Prepare the initialization script.
+		$calendar_init_script = "
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                if (calendarEl) {
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,listWeek'
+                        },
+                        events: '" . esc_url_raw( get_rest_url( null, 'causepro/v1/events' ) ) . "'
+                    });
+                    calendar.render();
+                }
+            });
+        ";
+
+		// Add the inline script.
+		wp_add_inline_script( 'fullcalendar', $calendar_init_script );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'causepro_calendar_scripts' );
