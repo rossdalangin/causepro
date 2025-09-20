@@ -25,7 +25,7 @@ get_header();
 
 				<?php if ( has_post_thumbnail() ) : ?>
 				<div class="post-thumbnail">
-					<?php the_post_thumbnail( 'causepro-featured-image' ); ?>
+					<?php the_post_thumbnail( 'full' ); ?>
 				</div><!-- .post-thumbnail -->
 				<?php endif; ?>
 
@@ -44,27 +44,14 @@ get_header();
 
 				<footer class="entry-footer">
 					<div class="cause-donate-section">
+						<h2 class="donate-prompt"><?php esc_html_e( 'Support This Cause', 'causepro' ); ?></h2>
+						<p><?php esc_html_e( 'Your contribution can make a real difference. Help us reach our goal.', 'causepro' ); ?></p>
 						<?php
-						$givewp_form_id = get_post_meta( get_the_ID(), '_cause_givewp_form_id', true );
-
-						// Check if GiveWP is active and a form ID is set for this cause.
-						if ( class_exists( 'Give' ) && ! empty( $givewp_form_id ) ) :
-							// Display the GiveWP form with its goal.
-							echo do_shortcode( '[give_form id="' . absint( $givewp_form_id ) . '" show_goal="true" show_title="false" show_content="none"]' );
-						else :
-							// Fallback to the default donation button.
-							?>
-							<h2 class="donate-prompt"><?php esc_html_e( 'Support This Cause', 'causepro' ); ?></h2>
-							<p><?php esc_html_e( 'Your contribution can make a real difference. Help us reach our goal.', 'causepro' ); ?></p>
-							<?php
-							$donation_link = get_theme_mod( 'causepro_donation_link', '#' );
-							if ( ! empty( $donation_link ) ) :
-							?>
-							<a href="<?php echo esc_url( $donation_link ); ?>" class="button button-primary button-large donate-button"><?php esc_html_e( 'Donate to this Cause', 'causepro' ); ?></a>
-							<?php
-							endif;
-						endif;
+						$donation_link = get_theme_mod( 'causepro_donation_link', '#' );
+						if ( ! empty( $donation_link ) ) :
 						?>
+						<a href="<?php echo esc_url( $donation_link ); ?>" class="button button-primary button-large donate-button"><?php esc_html_e( 'Donate to this Cause', 'causepro' ); ?></a>
+						<?php endif; ?>
 					</div>
 				</footer><!-- .entry-footer -->
 			</article><!-- #post-<?php the_ID(); ?> -->

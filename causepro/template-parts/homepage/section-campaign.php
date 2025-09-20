@@ -34,37 +34,19 @@ if ( $goal > 0 ) {
 				<?php echo wp_kses_post( $text ); ?>
 			</div>
 			<div class="campaign-progress">
-				<?php
-				$givewp_ids  = get_theme_mod( 'causepro_campaign_givewp_ids' );
-				$givewp_goal = get_theme_mod( 'causepro_campaign_givewp_goal' );
-
-				if ( class_exists( 'Give' ) && ! empty( $givewp_ids ) ) :
-					// Use GiveWP dynamic progress bar
-					$shortcode = '[give_totals ids="' . esc_attr( $givewp_ids ) . '" progress_bar="true"';
-					if ( ! empty( $givewp_goal ) ) {
-						$shortcode .= ' total_goal="' . absint( $givewp_goal ) . '"';
-					}
-					$shortcode .= ' progress_bar_message="{total} raised of {total_goal}"]';
-					echo do_shortcode( $shortcode );
-				else :
-					// Fallback to static progress bar from theme settings
-					?>
-					<div class="progress-bar-wrapper">
-						<div class="progress-bar-fill" style="width: <?php echo floatval( $percentage ); ?>%;"></div>
-					</div>
-					<div class="progress-bar-labels">
-						<span class="amount-raised">
-							<strong><?php esc_html_e( 'Raised:', 'causepro' ); ?></strong>
-							$<?php echo number_format( absint( $raised ) ); ?>
-						</span>
-						<span class="goal-amount">
-							<strong><?php esc_html_e( 'Goal:', 'causepro' ); ?></strong>
-							$<?php echo number_format( absint( $goal ) ); ?>
-						</span>
-					</div>
-					<?php
-				endif;
-				?>
+				<div class="progress-bar-wrapper">
+					<div class="progress-bar-fill" style="width: <?php echo floatval( $percentage ); ?>%;"></div>
+				</div>
+				<div class="progress-bar-labels">
+					<span class="amount-raised">
+						<strong><?php esc_html_e( 'Raised:', 'causepro' ); ?></strong>
+						$<?php echo number_format( absint( $raised ) ); ?>
+					</span>
+					<span class="goal-amount">
+						<strong><?php esc_html_e( 'Goal:', 'causepro' ); ?></strong>
+						$<?php echo number_format( absint( $goal ) ); ?>
+					</span>
+				</div>
 			</div>
 			<?php if ( ! empty( $donation_link ) && ! empty( $cta_text ) ) : ?>
 				<a href="<?php echo esc_url( $donation_link ); ?>" class="button campaign-cta"><?php echo esc_html( $cta_text ); ?></a>

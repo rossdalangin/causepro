@@ -22,7 +22,7 @@
 
 	<?php if ( has_post_thumbnail() ) : ?>
 		<div class="post-thumbnail">
-			<?php the_post_thumbnail( 'causepro-featured-image' ); ?>
+			<?php the_post_thumbnail( 'large' ); ?>
 		</div>
 	<?php endif; ?>
 
