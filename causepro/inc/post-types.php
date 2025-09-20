@@ -178,41 +178,6 @@ function causepro_register_content_types() {
 		'capability_type'       => 'post',
 	);
 	register_post_type( 'testimonial', $testimonial_args );
-
-	// FAQ CPT
-	$faq_labels = array(
-		'name'                  => _x( 'FAQs', 'Post Type General Name', 'causepro' ),
-		'singular_name'         => _x( 'FAQ', 'Post Type Singular Name', 'causepro' ),
-		'menu_name'             => __( 'FAQs', 'causepro' ),
-		'name_admin_bar'        => __( 'FAQ', 'causepro' ),
-		'all_items'             => __( 'All FAQs', 'causepro' ),
-		'add_new_item'          => __( 'Add New FAQ', 'causepro' ),
-		'add_new'               => __( 'Add New', 'causepro' ),
-		'new_item'              => __( 'New FAQ', 'causepro' ),
-		'edit_item'             => __( 'Edit FAQ', 'causepro' ),
-		'update_item'           => __( 'Update FAQ', 'causepro' ),
-		'view_item'             => __( 'View FAQ', 'causepro' ),
-		'search_items'          => __( 'Search FAQs', 'causepro' ),
-	);
-	$faq_args = array(
-		'label'                 => __( 'FAQ', 'causepro' ),
-		'description'           => __( 'Frequently Asked Questions', 'causepro' ),
-		'labels'                => $faq_labels,
-		'supports'              => array( 'title', 'editor', 'page-attributes' ),
-		'hierarchical'          => false,
-		'public'                => false,
-		'show_ui'               => true,
-		'show_in_menu'          => true,
-		'menu_icon'             => 'dashicons-editor-help',
-		'show_in_admin_bar'     => true,
-		'show_in_nav_menus'     => false,
-		'can_export'            => true,
-		'has_archive'           => false,
-		'exclude_from_search'   => true,
-		'publicly_queryable'    => false,
-		'capability_type'       => 'post',
-	);
-	register_post_type( 'faq', $faq_args );
 }
 add_action( 'init', 'causepro_register_content_types', 0 );
 

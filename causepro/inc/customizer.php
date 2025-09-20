@@ -357,39 +357,6 @@ function causepro_customize_register( $wp_customize ) {
 		'type'        => 'textarea',
 	) );
 
-	$wp_customize->add_setting( 'causepro_contact_phone', array( 'sanitize_callback' => 'sanitize_text_field' ) );
-	$wp_customize->add_control( 'causepro_contact_phone_control', array(
-		'label' => __( 'Phone Number', 'causepro' ),
-		'section' => 'causepro_contact_page_section',
-		'settings' => 'causepro_contact_phone',
-		'type' => 'text',
-	) );
-
-	$wp_customize->add_setting( 'causepro_contact_email', array( 'sanitize_callback' => 'sanitize_email' ) );
-	$wp_customize->add_control( 'causepro_contact_email_control', array(
-		'label' => __( 'Email Address', 'causepro' ),
-		'section' => 'causepro_contact_page_section',
-		'settings' => 'causepro_contact_email',
-		'type' => 'email',
-	) );
-
-	$wp_customize->add_setting( 'causepro_contact_address', array( 'sanitize_callback' => 'sanitize_textarea_field' ) );
-	$wp_customize->add_control( 'causepro_contact_address_control', array(
-		'label' => __( 'Physical Address', 'causepro' ),
-		'section' => 'causepro_contact_page_section',
-		'settings' => 'causepro_contact_address',
-		'type' => 'textarea',
-	) );
-
-	$wp_customize->add_setting( 'causepro_contact_map_url', array( 'sanitize_callback' => 'esc_url_raw' ) );
-	$wp_customize->add_control( 'causepro_contact_map_url_control', array(
-		'label' => __( 'Google Maps Embed URL', 'causepro' ),
-		'description' => __( 'Go to Google Maps, find your location, click "Share", then "Embed a map", and copy the SRC value from the iframe code.', 'causepro' ),
-		'section' => 'causepro_contact_page_section',
-		'settings' => 'causepro_contact_map_url',
-		'type' => 'url',
-	) );
-
 	// Section: Social Sharing
 	$wp_customize->add_section( 'causepro_social_sharing_section', array(
 		'title' => __( 'Social Sharing', 'causepro' ),
