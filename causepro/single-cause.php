@@ -25,7 +25,7 @@ get_header();
 
 				<?php if ( has_post_thumbnail() ) : ?>
 				<div class="post-thumbnail">
-					<?php the_post_thumbnail( 'full' ); ?>
+					<?php the_post_thumbnail( 'causepro-featured-image' ); ?>
 				</div><!-- .post-thumbnail -->
 				<?php endif; ?>
 

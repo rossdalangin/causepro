@@ -39,6 +39,7 @@ if ( ! function_exists( 'causepro_setup' ) ) :
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		 */
 		add_theme_support( 'post-thumbnails' );
+		add_image_size( 'causepro-featured-image', 800, 600, true );
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(

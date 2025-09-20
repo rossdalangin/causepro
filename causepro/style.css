@@ -705,3 +705,11 @@ a:focus, button:focus, input:focus {
 .page-template-template-homepage .site-main {
 	width: 100%;
 }
+
+/* Featured Image Styling */
+.post-thumbnail img,
+.cause-thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
