@@ -484,6 +484,15 @@ section[class^="homepage-"]:nth-child(even) {
 	text-align: center;
 }
 
+/* 5.8 - Call to Action Section */
+.homepage-cta {
+	text-align: center;
+}
+.cta-shortcode-wrapper {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
 
 /* 6.0 - Other Templates
 --------------------------------------------- */

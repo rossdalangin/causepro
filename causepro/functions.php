@@ -261,7 +261,7 @@ function causepro_dynamic_css() {
 	if ( ! empty( $footer_link_hover_color ) ) { $custom_css .= ".site-footer a:hover { color: {$footer_link_hover_color}; }"; }
 
 	// Homepage Section Designs
-	$sections_for_design = ['hero', 'impact', 'causes', 'campaign', 'events', 'testimonials', 'blog'];
+	$sections_for_design = ['hero', 'impact', 'causes', 'campaign', 'cta', 'events', 'testimonials', 'blog'];
 	foreach( $sections_for_design as $section ) {
 		$section_selector = ".homepage-{$section}";
 		$section_css = '';

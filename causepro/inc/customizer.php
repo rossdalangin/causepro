@@ -134,7 +134,7 @@ function causepro_customize_register( $wp_customize ) {
 		'priority'    => 10,
 		'description' => __( 'Set the display order for homepage sections by assigning a number (e.g., 10, 20, 30). Lower numbers appear first.', 'causepro' ),
 	) );
-	$sections = ['hero', 'impact', 'causes', 'campaign', 'events', 'testimonials', 'blog'];
+	$sections = ['hero', 'impact', 'causes', 'campaign', 'cta', 'events', 'testimonials', 'blog'];
 	$priority = 10;
 	foreach($sections as $section) {
 		$wp_customize->add_setting( "causepro_{$section}_section_priority", array(
@@ -268,6 +268,33 @@ function causepro_customize_register( $wp_customize ) {
 	$wp_customize->add_control( 'causepro_campaign_raised_control', array( 'label' => 'Amount Raised', 'section' => 'causepro_campaign_section', 'settings' => 'causepro_campaign_raised', 'type' => 'number' ) );
 	$wp_customize->add_setting( 'causepro_campaign_cta_text', array( 'default' => 'Donate to this Campaign', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
 	$wp_customize->add_control( 'causepro_campaign_cta_text_control', array( 'label' => 'Button Text', 'section' => 'causepro_campaign_section', 'settings' => 'causepro_campaign_cta_text' ) );
+
+
+	// Section: Call to Action
+	$wp_customize->add_section( 'causepro_cta_section', array(
+		'title' => __( 'Call to Action Section', 'causepro' ),
+		'panel' => 'causepro_homepage_sections_panel',
+	) );
+	$wp_customize->add_setting( 'causepro_cta_headline', array( 'default' => 'Make a Difference Today', 'sanitize_callback' => 'sanitize_text_field' ) );
+	$wp_customize->add_control( 'causepro_cta_headline_control', array(
+		'label' => 'Headline',
+		'section' => 'causepro_cta_section',
+		'settings' => 'causepro_cta_headline',
+	) );
+	$wp_customize->add_setting( 'causepro_cta_subtitle', array( 'sanitize_callback' => 'sanitize_textarea_field' ) );
+	$wp_customize->add_control( 'causepro_cta_subtitle_control', array(
+		'label' => 'Sub-title / Description',
+		'section' => 'causepro_cta_section',
+		'settings' => 'causepro_cta_subtitle',
+		'type' => 'textarea',
+	) );
+	$wp_customize->add_setting( 'causepro_cta_shortcode', array( 'default' => '[give_form id="217"]', 'sanitize_callback' => 'sanitize_text_field' ) );
+	$wp_customize->add_control( 'causepro_cta_shortcode_control', array(
+		'label' => 'Form Shortcode',
+		'description' => 'Enter the shortcode for your donation form.',
+		'section' => 'causepro_cta_section',
+		'settings' => 'causepro_cta_shortcode',
+	) );
 
 
 	// Section: Upcoming Events
@@ -467,7 +494,7 @@ function causepro_customize_register( $wp_customize ) {
 		'priority' => 25,
 	) );
 
-	$sections_for_design = ['hero', 'impact', 'causes', 'campaign', 'events', 'testimonials', 'blog'];
+	$sections_for_design = ['hero', 'impact', 'causes', 'campaign', 'cta', 'events', 'testimonials', 'blog'];
 
 	foreach ( $sections_for_design as $section ) {
 		$section_title = ucfirst( $section );
