@@ -15,7 +15,7 @@ $event_date = ! empty( $datetime ) ? new DateTime( $datetime ) : null;
 		<?php if ( has_post_thumbnail() ) : ?>
 			<div class="event-thumbnail">
 				<a href="<?php echo ! empty( $link ) ? esc_url( $link ) : the_permalink(); ?>">
-					<?php the_post_thumbnail( 'thumbnail' ); ?>
+					<?php the_post_thumbnail( 'causepro-featured-image' ); ?>
 				</a>
 			</div>
 		<?php endif; ?>

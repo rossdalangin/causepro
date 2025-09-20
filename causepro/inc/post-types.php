@@ -330,3 +330,59 @@ function causepro_save_testimonial_details_meta( $post_id ) {
 	}
 }
 add_action( 'save_post', 'causepro_save_testimonial_details_meta' );
+
+
+/**
+ * Adds a meta box for cause details (for GiveWP Integration).
+ */
+function causepro_cause_details_meta_box_setup() {
+	add_meta_box(
+		'causepro_cause_details',
+		'Cause Details',
+		'causepro_cause_details_meta_box_html',
+		'cause',
+		'normal',
+		'high'
+	);
+}
+add_action( 'add_meta_boxes', 'causepro_cause_details_meta_box_setup' );
+
+/**
+ * Renders the HTML for the cause details meta box.
+ *
+ * @param WP_Post $post The object for the current post/page.
+ */
+function causepro_cause_details_meta_box_html( $post ) {
+	wp_nonce_field( 'causepro_save_cause_details', 'causepro_cause_details_nonce' );
+	$givewp_form_id = get_post_meta( $post->ID, '_cause_givewp_form_id', true );
+	?>
+	<div class="causepro-meta-field">
+		<label for="causepro_cause_givewp_form_id_field"><?php esc_html_e( 'Associated GiveWP Form ID', 'causepro' ); ?></label>
+		<input type="number" id="causepro_cause_givewp_form_id_field" name="causepro_cause_givewp_form_id_field" value="<?php echo esc_attr( $givewp_form_id ); ?>" style="width: 100%;">
+		<p class="description"><?php esc_html_e( 'Enter the ID of the GiveWP form you want to display on this cause page. Leave blank to show the default donation button.', 'causepro' ); ?></p>
+	</div>
+	<?php
+}
+
+/**
+ * Saves the custom meta data for causes.
+ *
+ * @param int $post_id The ID of the post being saved.
+ */
+function causepro_save_cause_details_meta( $post_id ) {
+	if ( ! isset( $_POST['causepro_cause_details_nonce'] ) || ! wp_verify_nonce( $_POST['causepro_cause_details_nonce'], 'causepro_save_cause_details' ) ) {
+		return;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	if ( isset( $_POST['post_type'] ) && 'cause' == $_POST['post_type'] && ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	if ( isset( $_POST['causepro_cause_givewp_form_id_field'] ) ) {
+		$form_id = absint( $_POST['causepro_cause_givewp_form_id_field'] );
+		update_post_meta( $post_id, '_cause_givewp_form_id', $form_id );
+	}
+}
+add_action( 'save_post', 'causepro_save_cause_details_meta' );

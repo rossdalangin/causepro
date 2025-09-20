@@ -10,6 +10,9 @@
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
+function causepro_is_givewp_campaign_inactive( $control ) {
+	return empty( $control->manager->get_setting('causepro_campaign_givewp_ids')->value() );
+}
 function causepro_customize_register( $wp_customize ) {
 
 	// ----------------------------------------------------------------
@@ -263,11 +266,59 @@ function causepro_customize_register( $wp_customize ) {
 	$wp_customize->add_setting( 'causepro_campaign_text', array( 'sanitize_callback' => 'wp_kses_post', 'transport' => 'postMessage' ) );
 	$wp_customize->add_control( 'causepro_campaign_text_control', array( 'label' => 'Text', 'section' => 'causepro_campaign_section', 'settings' => 'causepro_campaign_text', 'type' => 'textarea' ) );
 	$wp_customize->add_setting( 'causepro_campaign_goal', array( 'default' => '10000', 'sanitize_callback' => 'absint' ) );
-	$wp_customize->add_control( 'causepro_campaign_goal_control', array( 'label' => 'Goal Amount', 'section' => 'causepro_campaign_section', 'settings' => 'causepro_campaign_goal', 'type' => 'number' ) );
+	$wp_customize->add_control( 'causepro_campaign_goal_control', array(
+		'label' => 'Goal Amount',
+		'section' => 'causepro_campaign_section',
+		'settings' => 'causepro_campaign_goal',
+		'type' => 'number',
+		'active_callback' => 'causepro_is_givewp_campaign_inactive',
+	) );
 	$wp_customize->add_setting( 'causepro_campaign_raised', array( 'default' => '7500', 'sanitize_callback' => 'absint' ) );
-	$wp_customize->add_control( 'causepro_campaign_raised_control', array( 'label' => 'Amount Raised', 'section' => 'causepro_campaign_section', 'settings' => 'causepro_campaign_raised', 'type' => 'number' ) );
+	$wp_customize->add_control( 'causepro_campaign_raised_control', array(
+		'label' => 'Amount Raised',
+		'section' => 'causepro_campaign_section',
+		'settings' => 'causepro_campaign_raised',
+		'type' => 'number',
+		'active_callback' => 'causepro_is_givewp_campaign_inactive',
+	) );
 	$wp_customize->add_setting( 'causepro_campaign_cta_text', array( 'default' => 'Donate to this Campaign', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'postMessage' ) );
 	$wp_customize->add_control( 'causepro_campaign_cta_text_control', array( 'label' => 'Button Text', 'section' => 'causepro_campaign_section', 'settings' => 'causepro_campaign_cta_text' ) );
+
+	// GiveWP Integration Settings
+	$wp_customize->add_setting( 'causepro_campaign_givewp_heading', array(
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'causepro_campaign_givewp_heading_control', array(
+		'label'       => __( 'GiveWP Integration', 'causepro' ),
+		'section'     => 'causepro_campaign_section',
+		'settings'    => 'causepro_campaign_givewp_heading',
+		'type'        => 'hidden', // Used as a heading
+		'description' => '<hr><h3>' . __( 'GiveWP Integration', 'causepro' ) . '</h3><p>' . __( 'Use these settings to display a dynamic progress bar from GiveWP forms. This will override the manual "Goal Amount" and "Amount Raised" settings above if Form IDs are provided.', 'causepro' ) . '</p>',
+	) ) );
+
+	$wp_customize->add_setting( 'causepro_campaign_givewp_ids', array(
+		'default'           => '',
+		'sanitize_callback' => 'sanitize_text_field',
+	) );
+	$wp_customize->add_control( 'causepro_campaign_givewp_ids_control', array(
+		'label'       => __( 'GiveWP Form IDs', 'causepro' ),
+		'description' => __( 'Enter a comma-separated list of GiveWP form IDs to combine for the progress bar.', 'causepro' ),
+		'section'     => 'causepro_campaign_section',
+		'settings'    => 'causepro_campaign_givewp_ids',
+		'type'        => 'text',
+	) );
+
+	$wp_customize->add_setting( 'causepro_campaign_givewp_goal', array(
+		'default'           => '',
+		'sanitize_callback' => 'absint',
+	) );
+	$wp_customize->add_control( 'causepro_campaign_givewp_goal_control', array(
+		'label'       => __( 'Overall Goal Override', 'causepro' ),
+		'description' => __( 'Optional. Set a total goal amount for the combined forms. If empty, the sum of individual form goals will be used (if set).', 'causepro' ),
+		'section'     => 'causepro_campaign_section',
+		'settings'    => 'causepro_campaign_givewp_goal',
+		'type'        => 'number',
+	) );
 
 
 	// Section: Upcoming Events
