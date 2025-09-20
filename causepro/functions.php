@@ -341,3 +341,14 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Custom Post Types.
  */
 require get_template_directory() . '/inc/post-types.php';
+
+
+/**
+ * Enqueue scripts for the contact page template.
+ */
+function causepro_contact_page_scripts() {
+	if ( is_page_template( 'template-contact.php' ) ) {
+		wp_enqueue_script( 'causepro-contact-page', get_template_directory_uri() . '/js/contact-page.js', array(), '1.0.0', true );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'causepro_contact_page_scripts' );
