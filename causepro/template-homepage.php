@@ -20,7 +20,6 @@ get_header();
 		'impact'       => 'template-parts/homepage/section-impact.php',
 		'causes'       => 'template-parts/homepage/section-causes.php',
 		'campaign'     => 'template-parts/homepage/section-campaign.php',
-		'cta'          => 'template-parts/homepage/section-cta.php',
 		'events'       => 'template-parts/homepage/section-events.php',
 		'testimonials' => 'template-parts/homepage/section-testimonials.php',
 		'blog'         => 'template-parts/homepage/section-blog.php',
